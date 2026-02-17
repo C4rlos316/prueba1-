@@ -22,10 +22,10 @@
 
 El **Secure Digital Document Vault** aborda la vulnerabilidad inherente en el intercambio de archivos digitales sobre canales inseguros y el almacenamiento en reposo no confiable. Nuestra propuesta resuelve el problema de la gestión de secretos, eliminando la dependencia de la confianza en el proveedor de almacenamiento y mitigando errores humanos comunes en la gestión manual de claves:
 
-- ✅ Solo los destinatarios autorizados puedan acceder al contenido
-- ✅ El contenido no pueda ser modificado sin detección
-- ✅ El origen del documento pueda ser verificado de manera confiable
-- ✅ Las claves privadas de los usuarios estén protegidas incluso si el dispositivo es comprometido
+- Solo los destinatarios autorizados puedan acceder al contenido
+- El contenido no pueda ser modificado sin detección
+- El origen del documento pueda ser verificado de manera confiable
+- Las claves privadas de los usuarios estén protegidas incluso si el dispositivo es comprometido
 
 ### Características principales
 
@@ -113,9 +113,7 @@ El proceso de emisión inicia cuando el usuario proporciona:
 
 ####  Transmisión Segura
 
-Una vez ensamblado, el contenedor es transmitido a través de un canal de red seguro (mediante **TLS/SSL**) hacia el servidor backend.
-
-> **⚠️ IMPORTANTE:** El entorno remoto (API y base de datos central) asume un **modelo de almacenamiento no confiable**. El servidor actúa exclusivamente como un repositorio inerte de los contenedores cifrados y del almacén de claves públicas, careciendo por completo de la capacidad para leer el contenido de los archivos o extraer las claves simétricas.
+Una vez ensamblado, el contenedor es transmitido a través de un canal de red seguro (mediante **TLS/SSL**) hacia el servidor backend. El entorno remoto (API y base de datos central) asume un **modelo de almacenamiento no confiable**. El servidor actúa exclusivamente como un repositorio inerte de los contenedores cifrados y del almacén de claves públicas, careciendo por completo de la capacidad para leer el contenido de los archivos o extraer las claves simétricas.
 
 ####  Proceso de Recuperación (Descifrado)
 
@@ -124,7 +122,7 @@ El modelo detalla el flujo de recuperación y verificación ejecutado por el des
 1. **Descarga del Contenedor**
    - El destinatario descarga el contenedor desde el almacenamiento remoto
 
-2. **Verificación de Firma (CRÍTICO - PRIMERO)**
+2. **Verificación de Firma**
    - La aplicación ejecuta una validación de la firma digital **ANTES** de cualquier manipulación
    - ❌ Si la firma es inválida → proceso se detiene inmediatamente
    - ✅ Si la firma es válida → continúa el proceso
@@ -389,9 +387,9 @@ Se detalla una lista de los adversarios que tenemos que considerar:
 
 ## 5. Supuestos de Confianza
 
-> ⚠️ El sistema asume que las siguientes condiciones son verdaderas. **Si alguno de estos supuestos es violado, las garantías de seguridad pueden no mantenerse.**
+>  El sistema asume que las siguientes condiciones son verdaderas. **Si alguno de estos supuestos es violado, las garantías de seguridad pueden no mantenerse.**
 
-### 1️⃣ Protección de Contraseñas por el Usuario
+### 1️ Protección de Contraseñas por el Usuario
 
 **Supuesto:** Los usuarios eligen contraseñas suficientemente fuertes y las mantienen secretas. No comparten sus contraseñas ni las almacenan de manera insegura.
 
@@ -399,7 +397,7 @@ Se detalla una lista de los adversarios que tenemos que considerar:
 
 ---
 
-### 2️⃣ Autenticidad de Claves Públicas
+### 2️ Autenticidad de Claves Públicas
 
 **Supuesto:** Las claves públicas de los destinatarios son auténticas y han sido obtenidas mediante un canal confiable. Los usuarios verifican las claves públicas antes de compartir archivos sensibles.
 
@@ -407,7 +405,7 @@ Se detalla una lista de los adversarios que tenemos que considerar:
 
 ---
 
-### 3️⃣ Integridad de la Aplicación Vault
+### 3️ Integridad de la Aplicación Vault
 
 **Supuesto:** El binario de la aplicación Vault no ha sido modificado por un atacante. Los usuarios obtienen la aplicación de fuentes confiables.
 
@@ -415,7 +413,7 @@ Se detalla una lista de los adversarios que tenemos que considerar:
 
 ---
 
-### 4️⃣ Almacenamiento No Confiable
+### 4️ Almacenamiento No Confiable
 
 **Supuesto:** Todo almacenamiento persistente (sistema de archivos local, almacenamiento externo) es considerado no confiable. Los atacantes pueden tener acceso de lectura a estos almacenamientos.
 
@@ -423,7 +421,7 @@ Se detalla una lista de los adversarios que tenemos que considerar:
 
 ---
 
-### 5️⃣ Memoria Segura Durante Ejecución
+### 5️ Memoria Segura Durante Ejecución
 
 **Supuesto:** Mientras la aplicación está en ejecución, la memoria del proceso está protegida por el sistema operativo contra acceso no autorizado de otros procesos.
 
@@ -431,7 +429,7 @@ Se detalla una lista de los adversarios que tenemos que considerar:
 
 ---
 
-### 6️⃣ Disponibilidad de Claves Privadas para Recuperación
+### 6️ Disponibilidad de Claves Privadas para Recuperación
 
 **Supuesto:** Los usuarios son responsables de hacer respaldo de su Key Store cifrado. El sistema no proporciona recuperación de claves si se pierde el Key Store o la contraseña.
 
@@ -439,7 +437,7 @@ Se detalla una lista de los adversarios que tenemos que considerar:
 
 ---
 
-### 7️⃣ Uso Apropiado del Sistema
+### 7️ Uso Apropiado del Sistema
 
 **Supuesto:** Los usuarios utilizan el sistema según lo diseñado y siguen las mejores prácticas (por ejemplo, no compartir archivos con destinatarios no confiables, verificar firmas antes de confiar en el contenido).
 
