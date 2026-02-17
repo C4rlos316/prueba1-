@@ -139,7 +139,7 @@ El modelo detalla el flujo de recuperación y verificación ejecutado por el des
 ---
 
 ###  Diagrama Visual
-![Arquitectura del sistema](img/diagrama.png)
+![Arquitectura del sistema](diagrama.png)
 
 ---
 
